@@ -1,4 +1,4 @@
-import config, { globals } from './rollup.config';
+import config from './rollup.config';
 import template from 'rollup-plugin-generate-html-template';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
@@ -12,6 +12,7 @@ config.input = ['./example/index.tsx'];
 config.watch = {
   exclude: 'node_modules',
 };
+config.external = []
 config.plugins.splice(2, 1, typescript({ tsconfig: './tsconfig.json', include: './example/*', typescript: ttypescript }));
 config.plugins = [
   ...config.plugins,
@@ -34,7 +35,6 @@ config.output = [
     inlineDynamicImports: true,
     name: 'VVirtualList',
     sourcemap: true,
-    globals,
   },
 ];
 
