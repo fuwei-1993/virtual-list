@@ -3,9 +3,6 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
-      "@src/*": [
-        "src/*"
-      ],
       "@utils/*": [
         "src/utils/*"
       ],
@@ -20,6 +17,9 @@
       ],
       "@constants/*": [
         "src/constants/*"
+      ],
+      "@src/*": [
+        "src/*"
       ],
     },
     "declaration": true,
@@ -61,7 +61,8 @@
   ],
   "include": [
     "src/**/*",
-    "typings/**/*"
+    "typings/**/*",
+    "example/*"
   ],
   "exclude": [
     "node_modules",

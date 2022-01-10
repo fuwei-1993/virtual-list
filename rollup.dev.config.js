@@ -1,19 +1,17 @@
-import config from './rollup.config';
-import template from 'rollup-plugin-generate-html-template';
-import serve from 'rollup-plugin-serve';
-import livereload from 'rollup-plugin-livereload';
-import ttypescript from 'ttypescript';
-import typescript from 'rollup-plugin-typescript2';
+import config from './rollup.config'
+import template from 'rollup-plugin-generate-html-template'
+import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 
-const filename = 'example-dist';
+const filename = 'example-dist'
 
-config.input = ['./example/index.tsx'];
+config.input = ['./example/index.tsx']
 
 config.watch = {
   exclude: 'node_modules',
-};
+}
 config.external = []
-config.plugins.splice(2, 1, typescript({ tsconfig: './tsconfig.json', include: './example/*', typescript: ttypescript }));
+
 config.plugins = [
   ...config.plugins,
   template({
@@ -27,7 +25,7 @@ config.plugins = [
     contentBase: filename,
   }),
   livereload(filename),
-];
+]
 config.output = [
   {
     file: `./${filename}/index.umd.js`,
@@ -36,6 +34,6 @@ config.output = [
     name: 'VVirtualList',
     sourcemap: true,
   },
-];
+]
 
-export default config;
+export default config

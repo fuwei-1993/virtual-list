@@ -3,7 +3,7 @@ import debounce from 'lodash/debounce'
 
 export const useSize = <T extends HTMLElement | null>(
   elementRef: MutableRefObject<T>,
-  once = false,
+  once = true,
   debounceTime = 500,
 ) => {
   const [width, setWidth] = useState(0)

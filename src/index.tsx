@@ -1,1 +1,1 @@
-export { default as VirtualList } from './components/virtual-list'
+export { default as VirtualList } from '@components/virtual-list'
