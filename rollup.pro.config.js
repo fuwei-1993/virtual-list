@@ -5,19 +5,28 @@ import ttypescript from 'ttypescript'
 import typescript from 'rollup-plugin-typescript2'
 import os from 'os'
 
+const tsconfigOverride = {
+  exclude: ['example/*'],
+}
+
 config.plugins.splice(
   2,
   1,
   typescript({
     tsconfig: './tsconfig.json',
-    exclude: './example/*',
+    tsconfigOverride,
     typescript: ttypescript,
   }),
 )
 config.plugins = [
   ...config.plugins,
   del({ targets: 'dist/*', hook: 'buildStart' }),
-  terser({ numWorkers: os.cpus().length - 1 }),
+  terser({
+    numWorkers: os.cpus().length - 1,
+    format: {
+      comments: false,
+    },
+  }),
 ]
 
 export default config

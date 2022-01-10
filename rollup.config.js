@@ -75,7 +75,7 @@ const config = {
   output: [
     {
       file: pkg.main,
-      format: 'esm',
+      format: 'es',
       sourcemap: process.env.NODE_ENV !== 'production',
       exports: 'named',
     },

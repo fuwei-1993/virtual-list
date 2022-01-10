@@ -105,3 +105,6 @@ dist
 
 # Rollup start
 example-dist
+
+# mac
+.DS_Store
