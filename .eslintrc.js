@@ -5,6 +5,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:prettier/recommended',
+    './.eslintrc-auto-import.json',
   ],
   settings: {
     react: {

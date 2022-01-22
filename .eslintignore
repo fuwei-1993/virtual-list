@@ -1,3 +1,5 @@
 node_modules
 dist
 example-dist
+auto-imports.d.ts
+.eslintrc-auto-import.json

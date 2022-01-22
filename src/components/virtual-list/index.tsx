@@ -1,5 +1,5 @@
 import { useSize } from '@hooks/use-size'
-import { FC, memo, useRef } from 'react'
+import type { FC } from 'react'
 import './index.less'
 interface VirtualListProps {
   /** @prop {{ id: string | number }[]} 列表数据 */

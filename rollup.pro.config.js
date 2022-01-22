@@ -10,7 +10,7 @@ const tsconfigOverride = {
 }
 
 config.plugins.splice(
-  2,
+  3,
   1,
   typescript({
     tsconfig: './tsconfig.json',

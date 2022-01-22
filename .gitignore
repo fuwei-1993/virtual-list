@@ -108,3 +108,7 @@ example-dist
 
 # mac
 .DS_Store
+
+# auto import
+auto-imports.d.ts
+.eslintrc-auto-import.json

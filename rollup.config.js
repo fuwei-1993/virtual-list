@@ -13,8 +13,9 @@ import ttypescript from 'ttypescript'
 import typescript from 'rollup-plugin-typescript2'
 import json from '@rollup/plugin-json'
 import { DEFAULT_EXTENSIONS } from '@babel/core'
+import AutoImport from 'unplugin-auto-import/rollup'
 
-export const globals = {
+const globals = {
   react: 'React',
 }
 
@@ -25,6 +26,20 @@ const config = {
   external,
   acornInjectPlugins: [jsx()],
   plugins: [
+    AutoImport({
+      imports: [
+        'react',
+        {
+          react: ['lazy', 'memo'],
+        },
+      ],
+      dts: `./typings/auto-imports.d.ts`,
+      eslintrc: {
+        enabled: true, // Default `false`
+        filepath: `./.eslintrc-auto-import.json`, // Default `./.eslintrc-auto-import.json`
+      },
+      resolvers: [() => null],
+    }),
     alias({
       entries: [
         { find: '@src', replacement: path.resolve(__dirname, 'src') },
@@ -45,6 +60,7 @@ const config = {
       ],
       resolve: ['.jsx', '.js', '.ts', '.tsx'],
     }),
+
     postcss({
       plugins: [nested(), autoprefixer()],
       extensions: ['.css', '.less'],
