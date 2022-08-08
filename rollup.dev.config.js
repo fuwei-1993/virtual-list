@@ -6,12 +6,10 @@ import livereload from 'rollup-plugin-livereload'
 const filename = 'example-dist'
 
 config.input = ['./example/index.tsx']
-
 config.watch = {
   exclude: 'node_modules',
 }
 config.external = []
-
 config.plugins = [
   ...config.plugins,
   template({
