@@ -19,7 +19,7 @@ export const useSize = <T extends HTMLElement | null>(
 
   useEffect(() => {
     handleResize()
-  }, [elementRef])
+  }, [handleResize])
 
   useEffect(() => {
     if (!once) {
@@ -29,7 +29,7 @@ export const useSize = <T extends HTMLElement | null>(
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [elementRef])
+  }, [handleResize, once])
 
   return {
     width,
