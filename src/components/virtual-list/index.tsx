@@ -3,6 +3,12 @@ import type { FC, ReactNode } from 'react'
 import './index.less'
 
 type ListData = { id: string | number }[]
+type Positions = {
+  top: number
+  bottom: number
+  height: number
+  index: number
+}
 interface VirtualListProps {
   /** @prop {{ id: string | number }[]} 列表数据 */
   listData: ListData
@@ -19,8 +25,8 @@ interface VirtualListProps {
   /** @prop {number} [itemSize = 200] 滚动列表项的高度 */
   itemSize: number
 
-  /** @prop {number}  子节点是一个函数 */
-  children: (list: ListData) => ReactNode
+  /** @prop {number}  子节点是一个函数 或是 react node */
+  children: ReactNode | ((list: ListData) => ReactNode)
 }
 
 const VirtualList: FC<VirtualListProps> = memo(
@@ -35,15 +41,29 @@ const VirtualList: FC<VirtualListProps> = memo(
     const vContainer = useRef<HTMLDivElement>(null)
     const { height } = useSize(vContainer, once, debounce)
     const [scrollTop, setScrollTop] = useState(0)
+    const [positions, setPositions] = useState<Partial<Positions>[]>([])
+    const listRef = useRef<HTMLDivElement>(null)
+    const [estimatedItemSize, setEstimatedItemSize] = useState(itemSize)
     const innerScreenHeight = screenHeight || height
 
     const onVirtualListScroll = (event: React.UIEvent<HTMLDivElement>) => {
       setScrollTop(event.currentTarget.scrollTop)
     }
 
+    const initPositions = useCallback(() => {
+      const positions = listData.map((_, index) => ({
+        height: estimatedItemSize,
+        top: index * estimatedItemSize,
+        bottom: (index + 1) * estimatedItemSize,
+        index,
+      }))
+
+      setPositions(positions)
+    }, [listData, estimatedItemSize])
+
     const totalHeight = useMemo(
-      () => itemSize * listData.length,
-      [itemSize, listData.length],
+      () => positions[positions.length - 1]?.bottom ?? 0 * estimatedItemSize,
+      [positions, estimatedItemSize],
     )
     const totalCount = useMemo(() => {
       return Math.ceil(innerScreenHeight / itemSize)
@@ -64,9 +84,46 @@ const VirtualList: FC<VirtualListProps> = memo(
     )
 
     const vList = useMemo(() => {
-      const interStartIndex = startIndex - 2 < 0 ? startIndex : startIndex - 2
-      return listData.slice(interStartIndex, endIndex + 2)
+      const interStartIndex = startIndex - 3
+      return listData
+        .map((item, index) => ({ item, index }))
+        .slice(Math.max(interStartIndex, 0), endIndex + 3)
     }, [startIndex, endIndex, listData])
+
+    const renderItem = useMemo(() => {
+      return (
+        <>
+          {vList.map(({ item, index }, i) => {
+            return (
+              <div key={i} data-id={index} className="virtual-list-item">
+                {children}
+              </div>
+            )
+          })}
+        </>
+      )
+    }, [children, vList])
+
+    useEffect(() => {
+      initPositions()
+    }, [initPositions])
+
+    useEffect(() => {
+      const itemNodes = Array.from(
+        listRef.current?.children ?? [],
+      ) as HTMLDivElement[]
+
+      itemNodes.forEach(node => {
+        const index = Number(node.dataset.id)
+        const height = node.getBoundingClientRect().height
+        const oldHeight = positions[index]?.height ?? 0
+        const diffHeight = height - oldHeight
+
+        if (diffHeight) {
+        }
+      })
+      console.log()
+    }, [positions])
 
     return (
       <div
@@ -83,8 +140,9 @@ const VirtualList: FC<VirtualListProps> = memo(
           style={{
             transform: `translateY(${offsetTop}px)`,
           }}
+          ref={listRef}
         >
-          {children?.(vList)}
+          {renderItem}
         </div>
       </div>
     )

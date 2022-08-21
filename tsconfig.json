@@ -32,6 +32,7 @@
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
+    "inlineSources": true,
     "sourceMap": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -44,7 +45,6 @@
       "es2017",
       "esnext"
     ],
-    "inlineSources": true,
     "plugins": [
       {
         "transform": "typescript-transform-paths"

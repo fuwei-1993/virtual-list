@@ -11,27 +11,17 @@ const createListData = (len: number) => {
   return result
 }
 
-const Test: FC<{ list: any[] }> = ({ list }) => {
-  return (
-    <>
-      {list.map((item, index) => {
-        return (
-          <div style={{ height: 200, border: '1px solid red' }} key={index}>
-            {item.id}
-          </div>
-        )
-      })}
-    </>
-  )
+const Test: FC = () => {
+  return <div style={{ height: 200, border: '1px solid red' }}>342342</div>
 }
 
 const Demo = () => {
+  console.log(32344)
+
   return (
     <div style={{ height: '100vh' }}>
       <VirtualList listData={createListData(200)} itemSize={200}>
-        {list => {
-          return <Test list={list} />
-        }}
+        <Test />
       </VirtualList>
     </div>
   )

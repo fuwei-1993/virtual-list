@@ -7,7 +7,7 @@ const filename = 'example-dist'
 
 config.input = ['./example/index.tsx']
 config.watch = {
-  exclude: 'node_modules',
+  include: ['src/**', 'example/**'],
 }
 config.external = []
 config.plugins = [
@@ -15,9 +15,6 @@ config.plugins = [
   template({
     template: './index.html',
     target: `./${filename}/index.html`,
-    // replaceVars: {
-    //   __STYLE_URL__: `${name}.css`,
-    // },
   }),
   serve(filename, {
     contentBase: filename,
@@ -30,7 +27,7 @@ config.output = [
     format: 'umd',
     inlineDynamicImports: true,
     name: 'VVirtualList',
-    sourcemap: true,
+    sourcemap: 'inline',
   },
 ]
 
