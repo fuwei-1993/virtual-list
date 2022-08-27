@@ -1,4 +1,4 @@
-import { useState, useEffect, MutableRefObject } from 'react'
+import type { MutableRefObject } from 'react'
 import debounce from 'lodash/debounce'
 
 export const useSize = <T extends HTMLElement | null>(
