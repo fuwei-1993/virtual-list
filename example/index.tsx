@@ -5,19 +5,20 @@ import { VirtualList } from '../src'
 const createListData = (len: number) => {
   const result = []
   for (let index = 0; index < len; index++) {
-    result.push({ id: index })
+    result.push({
+      id: index,
+      style: { height: Math.random() * 300 + 60, border: '1px solid red' },
+    })
   }
 
   return result
 }
 
-const Test: FC = () => {
-  return <div style={{ height: 200, border: '1px solid red' }}>342342</div>
+const Test: FC<any> = ({ itemData: { style, id } }) => {
+  return <div style={style}>{id}asdasdadasdas</div>
 }
 
 const Demo = () => {
-  console.log(32344)
-
   return (
     <div style={{ height: '100vh' }}>
       <VirtualList listData={createListData(200)} itemSize={200}>
@@ -27,4 +28,16 @@ const Demo = () => {
   )
 }
 
-render(<Demo />, document.getElementById('app'))
+const Demo2 = () => {
+  return (
+    <div style={{ height: '100vh' }}>
+      <VirtualList listData={createListData(200)} itemSize={200}>
+        {itemData => {
+          return <Test itemData={itemData} />
+        }}
+      </VirtualList>
+    </div>
+  )
+}
+
+render(<Demo2 />, document.getElementById('app'))

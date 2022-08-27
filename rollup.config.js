@@ -30,7 +30,7 @@ const config = {
       imports: [
         'react',
         {
-          react: ['lazy', 'memo'],
+          react: ['lazy', 'memo', 'createElement', 'cloneElement'],
         },
       ],
       dts: `./typings/auto-imports.d.ts`,
