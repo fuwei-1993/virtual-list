@@ -9,13 +9,16 @@ export const useSize = <T extends HTMLElement | null>(
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
 
-  const handleResize = debounce(() => {
-    const height = elementRef.current?.clientHeight ?? 0
-    const width = elementRef.current?.clientWidth ?? 0
+  const handleResize = useCallback(
+    debounce(() => {
+      const height = elementRef.current?.clientHeight ?? 0
+      const width = elementRef.current?.clientWidth ?? 0
 
-    height >= 0 && setHeight(height)
-    width >= 0 && setWidth(width)
-  }, debounceTime)
+      height >= 0 && setHeight(height)
+      width >= 0 && setWidth(width)
+    }, debounceTime),
+    [debounceTime],
+  )
 
   useEffect(() => {
     handleResize()

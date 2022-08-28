@@ -10,10 +10,10 @@ type Positions = {
 }
 interface VirtualListProps<T> {
   /** @prop {{ id: string | number }[]} 列表数据 */
-  listData: T[]
+  listData?: T[]
 
   /** @prop {boolean} [once = true] 是否只计算一次高度 */
-  once?: boolean
+  dynamicHeight?: boolean
 
   /** @prop {number} [debounce = 500] 是否防抖 */
   debounce?: number
@@ -21,11 +21,11 @@ interface VirtualListProps<T> {
   /** @prop {number} 滚动区域高度默认是容器高度 */
   screenHeight?: number
 
-  /** @prop {number} [itemSize = 200] 滚动列表项的高度 */
-  itemSize: number
+  // /** @prop {number} [itemSize = 200] 滚动列表项的高度 */
+  // itemSize?: number
 
   /** @prop {number}  子节点是一个函数 或是 react node */
-  children: ReactElement | ((itemData: T) => JSX.Element)
+  children?: ReactElement | ((itemData: T) => JSX.Element)
 
   /** @prop {number} [estimatedItemSize = 200] 滚动列表项的高度 */
   estimatedItemSize?: number
@@ -34,14 +34,14 @@ interface VirtualListProps<T> {
 function VirtualList<T extends ItemData = ItemData>({
   listData,
   children,
-  once = true,
-  debounce = 500,
+  dynamicHeight = false,
+  debounce = 0,
   screenHeight,
-  itemSize,
+  // itemSize,
   estimatedItemSize = 200,
 }: VirtualListProps<T>) {
   const vContainer = useRef<HTMLDivElement>(null)
-  const { height } = useSize(vContainer, once, debounce)
+  const { height } = useSize(vContainer, !dynamicHeight, debounce)
   const [scrollTop, setScrollTop] = useState(0)
   const [positions, setPositions] = useState<Partial<Positions>[]>([])
   const listRef = useRef<HTMLDivElement>(null)
@@ -55,11 +55,12 @@ function VirtualList<T extends ItemData = ItemData>({
   )
 
   const initPositions = useCallback(() => {
-    const positions = listData.map((_, index) => ({
-      height: estimatedItemSize,
-      bottom: (index + 1) * estimatedItemSize,
-      index,
-    }))
+    const positions =
+      listData?.map((_, index) => ({
+        height: estimatedItemSize,
+        bottom: (index + 1) * estimatedItemSize,
+        index,
+      })) ?? []
 
     setPositions(positions)
   }, [listData, estimatedItemSize])
@@ -98,8 +99,8 @@ function VirtualList<T extends ItemData = ItemData>({
     [positions],
   )
   const totalCount = useMemo(() => {
-    return Math.ceil(innerScreenHeight / itemSize)
-  }, [innerScreenHeight, itemSize])
+    return Math.ceil(innerScreenHeight / estimatedItemSize)
+  }, [innerScreenHeight, estimatedItemSize])
 
   const startIndex = useMemo(() => {
     // TODO ..
@@ -122,7 +123,7 @@ function VirtualList<T extends ItemData = ItemData>({
 
   const vList = useMemo(() => {
     return listData
-      .map((item, index) => ({ item, index }))
+      ?.map((item, index) => ({ item, index }))
       .slice(startIndex, endIndex + 3)
   }, [startIndex, endIndex, listData])
 
@@ -142,7 +143,7 @@ function VirtualList<T extends ItemData = ItemData>({
   const renderItem = useMemo(() => {
     return (
       <>
-        {vList.map(({ item, index }, i) => {
+        {vList?.map(({ item, index }, i) => {
           return (
             <div key={i} data-id={index} className="virtual-list-item">
               {handleChildren(item)}

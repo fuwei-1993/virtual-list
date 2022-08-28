@@ -7,7 +7,7 @@ const createListData = (len: number) => {
   for (let index = 0; index < len; index++) {
     result.push({
       id: index,
-      style: { height: Math.random() * 300 + 60, border: '1px solid red' },
+      style: { height: Math.random() * 50 + 60, border: '1px solid red' },
     })
   }
 
@@ -21,7 +21,7 @@ const Test: FC<any> = ({ itemData: { style, id } }) => {
 const Demo = () => {
   return (
     <div style={{ height: '100vh' }}>
-      <VirtualList listData={createListData(200)} itemSize={200}>
+      <VirtualList listData={createListData(200)} estimatedItemSize={85}>
         <Test />
       </VirtualList>
     </div>
@@ -31,7 +31,7 @@ const Demo = () => {
 const Demo2 = () => {
   return (
     <div style={{ height: '100vh' }}>
-      <VirtualList listData={createListData(200)} itemSize={200}>
+      <VirtualList listData={createListData(200)} estimatedItemSize={85}>
         {itemData => {
           return <Test itemData={itemData} />
         }}
