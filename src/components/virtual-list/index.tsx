@@ -11,10 +11,10 @@ interface VirtualListProps<T> {
   /** @prop {{ any }[]} 列表数据 */
   listData?: T[]
 
-  /** @prop {boolean} [once = true] 是否只计算一次高度 */
+  /** @prop {boolean} [dynamicHeight = false] 是否动态计算高度 */
   dynamicHeight?: boolean
 
-  /** @prop {number} [debounce = 500] 是否防抖 */
+  /** @prop {number} [debounce = 500] 计算高度时是否防抖 */
   debounce?: number
 
   /** @prop {number} 滚动区域高度默认是容器高度 */
