@@ -2,7 +2,7 @@ import { useSize } from '@hooks/use-size'
 import './index.less'
 
 type ItemData = {}
-type Positions = {
+type Position = {
   bottom: number
   height: number
   index: number
@@ -42,7 +42,7 @@ function VirtualList<T extends ItemData = ItemData>({
   const vContainer = useRef<HTMLDivElement>(null)
   const { height } = useSize(vContainer, !dynamicHeight, debounce)
   const [scrollTop, setScrollTop] = useState(0)
-  const [positions, setPositions] = useState<Partial<Positions>[]>([])
+  const [positions, setPositions] = useState<Partial<Position>[]>([])
   const listRef = useRef<HTMLDivElement>(null)
   const innerScreenHeight = screenHeight || height
 
@@ -63,6 +63,27 @@ function VirtualList<T extends ItemData = ItemData>({
 
     setPositions(positions)
   }, [listData, estimatedItemSize])
+
+  const binarySearch = useCallback(
+    (positions: Position[], scrollTop: number) => {
+      if (scrollTop === 0) return 0
+
+      let start = 0
+      let end = positions.length - 1
+
+      while (start + 1 < end) {
+        const middle = Math.floor((start + end) / 2)
+        if (scrollTop > positions[middle].bottom) {
+          start = middle + 1
+        } else {
+          end = middle - 1
+        }
+      }
+
+      return end
+    },
+    [],
+  )
 
   const updateItemSize = useCallback(() => {
     const itemNodes = Array.from(
@@ -102,12 +123,10 @@ function VirtualList<T extends ItemData = ItemData>({
   }, [innerScreenHeight, estimatedItemSize])
 
   const startIndex = useMemo(() => {
-    // TODO ..
-    const startPositionIndex = positions.findIndex(
-      p => (p?.bottom ?? 0) >= scrollTop,
-    )
+    const startPositionIndex = binarySearch(positions as Position[], scrollTop)
+
     return startPositionIndex >= 0 ? startPositionIndex : positions.length - 1
-  }, [scrollTop, positions])
+  }, [scrollTop, positions, binarySearch])
 
   const endIndex = useMemo(
     () => totalCount + startIndex,

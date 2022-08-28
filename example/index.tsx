@@ -21,7 +21,7 @@ const Test: FC<any> = ({ itemData: { style, id } }) => {
 const Demo = () => {
   return (
     <div style={{ height: '100vh' }}>
-      <VirtualList listData={createListData(200)} estimatedItemSize={85}>
+      <VirtualList listData={createListData(2000)} estimatedItemSize={85}>
         <Test />
       </VirtualList>
     </div>
@@ -31,7 +31,7 @@ const Demo = () => {
 const Demo2 = () => {
   return (
     <div style={{ height: '100vh' }}>
-      <VirtualList listData={createListData(200)} estimatedItemSize={85}>
+      <VirtualList listData={createListData(20000)} estimatedItemSize={85}>
         {itemData => {
           return <Test itemData={itemData} />
         }}
