@@ -1,6 +1,6 @@
 {
-  "name": "v-virtual-list",
-  "version": "0.0.1",
+  "name": "fuwei-virtual-list",
+  "version": "0.0.2",
   "author": "fuwei <454575238@qq.com>",
   "license": "MIT",
   "main": "dist/index.js",
