@@ -1,5 +1,4 @@
 import { useSize } from '@hooks/use-size'
-import { FC, ReactElement, isValidElement } from 'react'
 import './index.less'
 
 type ItemData = { id: string | number }

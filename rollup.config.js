@@ -23,7 +23,13 @@ const config = {
       imports: [
         'react',
         {
-          react: ['lazy', 'memo', 'createElement', 'cloneElement'],
+          react: [
+            'lazy',
+            'memo',
+            'createElement',
+            'cloneElement',
+            'isValidElement',
+          ],
         },
       ],
       dts: `./typings/auto-imports.d.ts`,

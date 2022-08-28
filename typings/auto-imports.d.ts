@@ -3,6 +3,7 @@
 declare global {
   const cloneElement: typeof import('react')['cloneElement']
   const createElement: typeof import('react')['createElement']
+  const isValidElement: typeof import('react')['isValidElement']
   const lazy: typeof import('react')['lazy']
   const memo: typeof import('react')['memo']
   const useCallback: typeof import('react')['useCallback']
