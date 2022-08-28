@@ -1,14 +1,14 @@
 import { useSize } from '@hooks/use-size'
 import './index.less'
 
-type ItemData = { id: string | number }
+type ItemData = {}
 type Positions = {
   bottom: number
   height: number
   index: number
 }
 interface VirtualListProps<T> {
-  /** @prop {{ id: string | number }[]} 列表数据 */
+  /** @prop {{ any }[]} 列表数据 */
   listData?: T[]
 
   /** @prop {boolean} [once = true] 是否只计算一次高度 */
@@ -24,7 +24,7 @@ interface VirtualListProps<T> {
   // itemSize?: number
 
   /** @prop {number}  子节点是一个函数 或是 react node */
-  children?: ReactElement | ((itemData: T) => JSX.Element)
+  children?: React.ReactElement | ((itemData: T) => JSX.Element)
 
   /** @prop {number} [estimatedItemSize = 200] 滚动列表项的高度 */
   estimatedItemSize?: number
