@@ -4,6 +4,7 @@ import { terser } from 'rollup-plugin-terser'
 import ttypescript from 'ttypescript'
 import typescript from 'rollup-plugin-typescript2'
 import os from 'os'
+import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 
 const typescriptPluginName = 'rpt2'
 const tsconfigOverride = {
@@ -24,6 +25,7 @@ config.plugins = config.plugins.reduceRight(
       : [curr, ...result]
   },
   [
+    peerDepsExternal(),
     del({ targets: 'dist/*', hook: 'buildStart' }),
     terser({
       numWorkers: os.cpus().length - 1,

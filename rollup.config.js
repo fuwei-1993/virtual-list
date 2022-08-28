@@ -6,7 +6,7 @@ import postcss from 'rollup-plugin-postcss'
 import alias from '@rollup/plugin-alias'
 import autoprefixer from 'autoprefixer'
 import nested from 'postcss-nested'
-import resolve from 'rollup-plugin-node-resolve'
+import resolve from '@rollup/plugin-node-resolve'
 import pkg from './package.json'
 import jsx from 'acorn-jsx'
 import ttypescript from 'ttypescript'
@@ -15,15 +15,8 @@ import json from '@rollup/plugin-json'
 import { DEFAULT_EXTENSIONS } from '@babel/core'
 import AutoImport from 'unplugin-auto-import/rollup'
 
-const globals = {
-  react: 'React',
-}
-
-const external = [...Object.keys(globals)]
-
 const config = {
   input: ['./src/index.tsx'],
-  external,
   acornInjectPlugins: [jsx()],
   plugins: [
     AutoImport({
@@ -75,12 +68,14 @@ const config = {
     }),
     resolve({
       browser: true,
-      customResolveOptions: {
-        moduleDirectory: 'node_modules',
-      },
+      moduleDirectories: ['node_modules'],
     }),
     json(),
-    commonjs(),
+    commonjs({
+      include: 'node_modules/**',
+      extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'],
+      ignoreGlobal: true,
+    }),
     replace({
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify(

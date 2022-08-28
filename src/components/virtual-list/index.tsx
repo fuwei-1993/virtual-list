@@ -180,7 +180,7 @@ function VirtualList<T extends ItemData = ItemData>({
       <div
         className="virtual-list"
         style={{
-          transform: `translateY(${offsetTop}px)`,
+          transform: `translate3d(0,${offsetTop}px,0)`,
         }}
         ref={listRef}
       >
