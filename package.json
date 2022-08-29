@@ -1,6 +1,6 @@
 {
   "name": "fuwei-virtual-list",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "fuwei <454575238@qq.com>",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,6 +10,18 @@
     "type": "git",
     "url": "git@github.com:fuwei-1993/virtual-list.git"
   },
+  "keywords": [
+    "react",
+    "reactjs",
+    "virtual",
+    "window",
+    "windowed",
+    "list",
+    "scrolling",
+    "infinite",
+    "virtualized",
+    "virtual-list"
+  ],
   "files": [
     "dist/",
     "README.md"
