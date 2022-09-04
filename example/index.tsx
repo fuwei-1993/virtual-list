@@ -15,7 +15,7 @@ const createListData = (len: number) => {
 }
 
 const Test: FC<any> = ({ itemData: { style, id } }) => {
-  return <div style={style}>{id}asdasdadasdas</div>
+  return <div style={style}>{id}他们说这就是人生</div>
 }
 
 const Demo = () => {

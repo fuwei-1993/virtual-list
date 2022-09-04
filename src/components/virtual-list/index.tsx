@@ -28,6 +28,9 @@ interface VirtualListProps<T> {
 
   /** @prop {number} [estimatedItemSize = 200] 滚动列表项的高度 */
   estimatedItemSize?: number
+
+  /** @prop {number} [scrollTo = 0] 支持传入滚动 */
+  scrollTo?: number
 }
 
 function VirtualList<T extends ItemData = ItemData>({
@@ -37,6 +40,7 @@ function VirtualList<T extends ItemData = ItemData>({
   debounce = 0,
   screenHeight,
   // itemSize,
+  scrollTo = 0,
   estimatedItemSize = 200,
 }: VirtualListProps<T>) {
   const vContainer = useRef<HTMLDivElement>(null)
@@ -45,6 +49,10 @@ function VirtualList<T extends ItemData = ItemData>({
   const [positions, setPositions] = useState<Partial<Position>[]>([])
   const listRef = useRef<HTMLDivElement>(null)
   const innerScreenHeight = screenHeight || height
+
+  useEffect(() => {
+    vContainer.current?.scrollTo({ top: scrollTo })
+  }, [scrollTo])
 
   const onVirtualListScroll = useCallback(
     (event: React.UIEvent<HTMLDivElement>) => {
@@ -183,7 +191,7 @@ function VirtualList<T extends ItemData = ItemData>({
 
   useEffect(() => {
     updateItemSize()
-  }, [updateItemSize, isNeedUpdateItemSize])
+  }, [updateItemSize, isNeedUpdateItemSize, initPositions])
 
   return (
     <div

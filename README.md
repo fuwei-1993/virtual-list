@@ -1,6 +1,8 @@
 # fuwei-virtaul-list
 一个基于react的虚拟滚动组件
 ### 最近更新
+- 0.0.4 - 增加滚动位置参数 & list data 变化重新计算
+
 - 0.0.3 - 增加keywords
 
 - 0.0.2 - 增加说明文档
@@ -28,6 +30,7 @@ $ npm i fuwei-virtual-list
 | dynamicHeight? | 是否动态计算高度 | boolean                                   | False | 动态计算高度使用在可以手动拖拽容器的场景 |
 | debounce? | 防抖 | number | 0 | 动态计算高度时的防抖时间 |
 | screenHeight? | 容器高度 | number | - |容器可以是固定高度|
+| screenTo? | 滚动位置 | number | - |传入滚动位置|
 | children? | 子节点 | ReactElement \|((itemData:) => JSX.Element) | - |子节点可以是函数也可以是组件|
 
 
