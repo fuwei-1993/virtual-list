@@ -1,12 +1,14 @@
+import { VirtualListItem } from '@components/virtual-list-item'
 import { useSize } from '@hooks/use-size'
 import './index.less'
 
-type ItemData = {}
 type Position = {
   bottom: number
   height: number
   index: number
 }
+
+export type Children<T> = React.ReactElement | ((itemData: T) => JSX.Element)
 interface VirtualListProps<T> {
   /** @prop {{ any }[]} 列表数据 */
   listData?: T[]
@@ -24,7 +26,7 @@ interface VirtualListProps<T> {
   // itemSize?: number
 
   /** @prop {number}  子节点是一个函数 或是 react node */
-  children?: React.ReactElement | ((itemData: T) => JSX.Element)
+  children?: Children<T>
 
   /** @prop {number} [estimatedItemSize = 200] 滚动列表项的高度 */
   estimatedItemSize?: number
@@ -33,7 +35,7 @@ interface VirtualListProps<T> {
   scrollTo?: number
 }
 
-function VirtualList<T extends ItemData = ItemData>({
+function VirtualList<T>({
   listData,
   children,
   dynamicHeight = false,
@@ -153,32 +155,19 @@ function VirtualList<T extends ItemData = ItemData>({
       .slice(startIndex, endIndex + 3)
   }, [startIndex, endIndex, listData])
 
-  const handleChildren = useCallback(
-    (itemData: T) => {
-      if (isValidElement(children)) {
-        return cloneElement(children, {
-          itemData,
-          ...children.props,
-        })
-      }
-      return children?.(itemData)
-    },
-    [children],
-  )
-
   const renderItem = useMemo(() => {
     return (
       <>
         {vList?.map(({ item, index }, i) => {
           return (
-            <div key={i} data-id={index} className="virtual-list-item">
-              {handleChildren(item)}
-            </div>
+            <VirtualListItem key={i} id={index} itemData={item}>
+              {children as Children<T>}
+            </VirtualListItem>
           )
         })}
       </>
     )
-  }, [handleChildren, vList])
+  }, [vList, children])
 
   const isNeedUpdateItemSize = useMemo(
     () => Math.floor(scrollTop / innerScreenHeight),
@@ -216,4 +205,4 @@ function VirtualList<T extends ItemData = ItemData>({
   )
 }
 
-export default VirtualList
+export default memo(VirtualList)
