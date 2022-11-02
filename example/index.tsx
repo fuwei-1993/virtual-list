@@ -31,7 +31,11 @@ const Demo = () => {
 const Demo2 = () => {
   return (
     <div style={{ height: '100vh' }}>
-      <VirtualList listData={createListData(20000)} estimatedItemSize={85}>
+      <VirtualList
+        listData={createListData(20000)}
+        dynamicHeight
+        estimatedItemSize={85}
+      >
         {itemData => {
           return <Test itemData={itemData} />
         }}

@@ -161,7 +161,7 @@ function VirtualList<T>({
         {vList?.map(({ item, index }, i) => {
           return (
             <VirtualListItem key={i} id={index} itemData={item}>
-              {children as Children<T>}
+              {children}
             </VirtualListItem>
           )
         })}
@@ -205,4 +205,4 @@ function VirtualList<T>({
   )
 }
 
-export default memo(VirtualList)
+export default memo(VirtualList) as typeof VirtualList

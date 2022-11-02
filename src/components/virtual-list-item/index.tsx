@@ -1,7 +1,7 @@
 import { Children } from '@components/virtual-list'
 
 interface VirtualListItem<T> {
-  children: Children<T>
+  children?: Children<T>
   itemData: T
   id: string | number
 }
