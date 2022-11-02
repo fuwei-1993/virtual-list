@@ -1,4 +1,5 @@
 import { VirtualListItem } from '@components/virtual-list-item'
+import { useCrossRendering } from '@hooks/use-cross-rendering'
 import { useSize } from '@hooks/use-size'
 import './index.less'
 
@@ -51,6 +52,8 @@ function VirtualList<T>({
   const [positions, setPositions] = useState<Partial<Position>[]>([])
   const listRef = useRef<HTMLDivElement>(null)
   const innerScreenHeight = screenHeight || height
+
+  useCrossRendering(vContainer, listRef, listData)
 
   useEffect(() => {
     vContainer.current?.scrollTo({ top: scrollTo })

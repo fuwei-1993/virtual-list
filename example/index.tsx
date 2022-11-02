@@ -29,13 +29,16 @@ const Demo = () => {
 }
 
 const Demo2 = () => {
+  const [data, setData] = useState<any[]>([])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData(createListData(20000))
+    }, 1000)
+  }, [])
   return (
     <div style={{ height: '100vh' }}>
-      <VirtualList
-        listData={createListData(20000)}
-        dynamicHeight
-        estimatedItemSize={85}
-      >
+      <VirtualList listData={data} dynamicHeight estimatedItemSize={85}>
         {itemData => {
           return <Test itemData={itemData} />
         }}
