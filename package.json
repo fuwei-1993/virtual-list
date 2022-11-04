@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git@github.com:fuwei-1993/virtual-list.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "keywords": [
     "react",
     "reactjs",
