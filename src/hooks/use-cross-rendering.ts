@@ -7,7 +7,7 @@ export const useCrossRendering = <T>(
 ) => {
   const changesHandler = useCallback(changes => {
     for (const change of changes) {
-      console.log(change.time)
+      console.log(change.isIntersecting)
       // Timestamp when the change occurred
       // 当可视状态变化时，状态发送改变的时间戳
       // 对比时间为，实例化的时间，
