@@ -29,7 +29,7 @@ const Demo = () => {
 }
 
 const Demo2 = () => {
-  const [data, setData] = useState<any[]>([])
+  const [data, setData] = useState<ReturnType<typeof createListData>>([])
 
   useEffect(() => {
     setTimeout(() => {
