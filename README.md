@@ -1,6 +1,8 @@
 # fuwei-virtaul-list
 一个基于react的虚拟滚动组件
 ### 最近更新
+- 0.0.5 - 优化滚动计算性能
+
 - 0.0.4 - 增加滚动位置参数 & list data 变化重新计算
 
 - 0.0.3 - 增加keywords
