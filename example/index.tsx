@@ -2,12 +2,12 @@ import { FC } from 'react'
 import { render } from 'react-dom'
 import { VirtualList } from '../src'
 
-const createListData = (len: number) => {
+const createListData = (len: number, random = 50) => {
   const result = []
   for (let index = 0; index < len; index++) {
     result.push({
       id: index,
-      style: { height: Math.random() * 50 + 60, border: '1px solid red' },
+      style: { height: Math.random() * random + 60, border: '1px solid red' },
     })
   }
 
@@ -33,17 +33,26 @@ const Demo2 = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setData(createListData(20000))
+      setData(createListData(20000, Math.random() * 50))
     }, 1000)
   }, [])
   return (
-    <div style={{ height: '100vh' }}>
-      <VirtualList listData={data} dynamicHeight estimatedItemSize={85}>
-        {itemData => {
-          return <Test itemData={itemData} />
+    <>
+      <button
+        onClick={() => {
+          setData(createListData(20000 * Math.random(), Math.random() * 50))
         }}
-      </VirtualList>
-    </div>
+      >
+        点我
+      </button>
+      <div style={{ height: '500px' }}>
+        <VirtualList listData={data} dynamicHeight estimatedItemSize={15}>
+          {itemData => {
+            return <Test itemData={itemData} />
+          }}
+        </VirtualList>
+      </div>
+    </>
   )
 }
 

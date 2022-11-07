@@ -23,9 +23,5 @@ export function VirtualListItem<T>({
     },
     [children],
   )
-  return (
-    <div data-id={id} className="virtual-list-item">
-      {handleChildren(itemData)}
-    </div>
-  )
+  return <>{handleChildren(itemData)}</>
 }

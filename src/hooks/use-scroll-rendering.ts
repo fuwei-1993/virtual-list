@@ -12,6 +12,7 @@ export const useScrollRendering = <T>(
 ) => {
   const [scrollTop, setScrollTop] = useState(0)
   const [positions, setPositions] = useState<Partial<Position>[]>([])
+  const virtualIndexMap = useRef<Record<number, number>>({})
 
   const onVirtualListScroll = useCallback(
     (event: React.UIEvent<HTMLDivElement>) => {
@@ -52,14 +53,17 @@ export const useScrollRendering = <T>(
   )
 
   const updateItemSize = useCallback(() => {
+    if (!initPositions.length) return
     const itemNodes = Array.from(
       listRef.current?.children ?? [],
     ) as HTMLDivElement[]
 
     let currentPos = initPositions
 
-    itemNodes.forEach(node => {
-      const index = Number(node.dataset.id)
+    itemNodes.forEach((node, i) => {
+      const index = virtualIndexMap.current[i]
+
+      console.log(index, node.dataset.id)
       const height = node.getBoundingClientRect().height
       const oldHeight = currentPos[index].height
       const diffHeight = height - oldHeight
@@ -104,9 +108,14 @@ export const useScrollRendering = <T>(
   }, [positions, startIndex])
 
   const vList = useMemo(() => {
-    return listData
+    const result = listData
       ?.map((item, index) => ({ item, index }))
       .slice(startIndex, endIndex + 3)
+
+    result?.forEach(({ index }, i) => {
+      virtualIndexMap.current[i] = index
+    })
+    return result
   }, [startIndex, endIndex, listData])
 
   const isNeedUpdateItemSize = useMemo(() => {
