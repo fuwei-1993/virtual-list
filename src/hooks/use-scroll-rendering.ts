@@ -62,8 +62,6 @@ export const useScrollRendering = <T>(
 
     itemNodes.forEach((node, i) => {
       const index = virtualIndexMap.current[i]
-
-      console.log(index, node.dataset.id)
       const height = node.getBoundingClientRect().height
       const oldHeight = currentPos[index].height
       const diffHeight = height - oldHeight
