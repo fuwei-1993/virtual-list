@@ -58,9 +58,9 @@ function VirtualList<T>({
   const renderItem = useMemo(() => {
     return (
       <>
-        {vList?.map(({ item, index }, i) => {
+        {vList?.map(({ item }, i) => {
           return (
-            <VirtualListItem key={i} id={index} itemData={item}>
+            <VirtualListItem key={i} itemData={item}>
               {children}
             </VirtualListItem>
           )
