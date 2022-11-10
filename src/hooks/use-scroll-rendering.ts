@@ -11,7 +11,7 @@ export const useScrollRendering = <T>(
   listData?: T[],
 ) => {
   const [scrollTop, setScrollTop] = useState(0)
-  const [positions, setPositions] = useState<Partial<Position>[]>([])
+  const [positions, setPositions] = useState<Position[]>([])
   const virtualIndexMap = useRef<Record<number, number>>({})
 
   const onVirtualListScroll = useCallback(
@@ -89,7 +89,7 @@ export const useScrollRendering = <T>(
   }, [innerScreenHeight, estimatedItemSize])
 
   const startIndex = useMemo(() => {
-    const startPositionIndex = binarySearch(positions as Position[], scrollTop)
+    const startPositionIndex = binarySearch(positions, scrollTop)
 
     return startPositionIndex >= 0 ? startPositionIndex : positions.length - 1
   }, [scrollTop, positions, binarySearch])
