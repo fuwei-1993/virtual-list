@@ -52,34 +52,6 @@ export const useScrollRendering = <T>(
     [],
   )
 
-  const updateItemSize = useCallback(() => {
-    if (!initPositions.length) return
-    const itemNodes = Array.from(
-      listRef.current?.children ?? [],
-    ) as HTMLDivElement[]
-
-    let currentPos = initPositions
-
-    itemNodes.forEach((node, i) => {
-      const index = virtualIndexMap.current[i]
-      const height = node.getBoundingClientRect().height
-      const oldHeight = currentPos[index].height
-      const diffHeight = height - oldHeight
-
-      if (diffHeight) {
-        currentPos = [...currentPos]
-        currentPos[index].bottom = diffHeight + currentPos[index].bottom
-        currentPos[index].height = height
-
-        for (let k = index + 1; k < currentPos.length; k++) {
-          currentPos[k].bottom = diffHeight + currentPos[k].bottom
-        }
-      }
-    })
-
-    setPositions(currentPos)
-  }, [listRef, initPositions])
-
   const totalHeight = useMemo(
     () => positions[positions.length - 1]?.bottom ?? 0,
     [positions],
@@ -120,6 +92,34 @@ export const useScrollRendering = <T>(
     if (!innerScreenHeight) return 0
     return Math.floor(scrollTop / innerScreenHeight)
   }, [innerScreenHeight, scrollTop])
+
+  const updateItemSize = useCallback(() => {
+    if (!initPositions.length) return
+    const itemNodes = Array.from(
+      listRef.current?.children ?? [],
+    ) as HTMLDivElement[]
+
+    let currentPos = initPositions
+
+    itemNodes.forEach((node, i) => {
+      const index = virtualIndexMap.current[i]
+      const height = node.getBoundingClientRect().height
+      const oldHeight = currentPos[index].height
+      const diffHeight = height - oldHeight
+
+      if (diffHeight) {
+        currentPos = [...currentPos]
+        currentPos[index].bottom = diffHeight + currentPos[index].bottom
+        currentPos[index].height = height
+
+        for (let k = index + 1; k < currentPos.length; k++) {
+          currentPos[k].bottom = diffHeight + currentPos[k].bottom
+        }
+      }
+    })
+
+    setPositions(currentPos)
+  }, [listRef, initPositions])
 
   useEffect(() => {
     updateItemSize()
